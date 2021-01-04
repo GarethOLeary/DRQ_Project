@@ -13,20 +13,29 @@ import { CreateData } from './components/createData';
 import { ReadGin } from './components/readGin';
 import { CreateGin } from './components/createGin';
 import {Footer} from './components/footer'
+import {HomePractice} from './components/homePractice'
+import { Dashboard } from './components/dashboard';
+import { ReadModal } from './components/readModal';
+
+
+
+
+
 
 class App extends Component {
+ 
   render() {
     return (
       <Router>
         <div className="App">
 
           <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="/">Cocktail Central</Navbar.Brand>
+            <Navbar.Brand href="/homePractice">Cocktail Central</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
                 <NavDropdown title="Drinks" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="/rum">Rum Drinks</NavDropdown.Item>
+        <NavDropdown.Item href="/rum" >Rum Drinks</NavDropdown.Item>
         <NavDropdown.Item href="/vodka">Vodka Drinks</NavDropdown.Item>
         <NavDropdown.Item href="/gin">Gin Drinks</NavDropdown.Item>
         
@@ -34,9 +43,14 @@ class App extends Component {
               </Nav>
               <Nav>
               <NavDropdown title="Add Drink recipes" id="collasible-nav-dropdown">
+          
+          
+       
         <NavDropdown.Item href="/create">Add a Rum Recipe</NavDropdown.Item>
         <NavDropdown.Item href="/createData">Add a Vodka Recipe</NavDropdown.Item>
         <NavDropdown.Item href="/createGin">Add a Gin Recipe</NavDropdown.Item>
+        <NavDropdown.Item href="/dashboard">Add a  Recipe</NavDropdown.Item>
+       
         
       </NavDropdown>
                 
@@ -51,6 +65,11 @@ class App extends Component {
           <br />
 
 
+          
+
+
+
+
           <Switch>
 
             <Route path='/' component={Home} exact />
@@ -61,6 +80,16 @@ class App extends Component {
             <Route path='/createData' component={CreateData} exact />
             <Route path='/createGin' component={CreateGin} exact />
             <Route path='/update/:id' component={Update} exact></Route>
+            <Route path='/homePractice' component={HomePractice} exact></Route>
+            <Route path='/dashboard' component={Dashboard} exact></Route>
+            <Route path='/readModal' component={ReadModal} exact></Route>
+            
+          
+          
+            
+            
+           
+            
           </Switch>
           <div className="page-container">
       <div className="content-wrap">

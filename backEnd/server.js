@@ -37,6 +37,7 @@ var DrinksModel = mongoose.model("drinks", drinksSchema);
 var DrinkModel = mongoose.model("vodkaDrinks", drinksSchema);
 var GinModel = mongoose.model("ginDrinks", drinksSchema);
 
+
 // Get request 
 app.get('/api/drinks', (req, res) => {
 
@@ -72,6 +73,8 @@ app.get('/api/gindrinks', (req, res) => {
      })
 
 })
+
+
 
 
 // Get request 
@@ -176,6 +179,8 @@ app.post('/api/vodkadrinks', (req, res) => {
     })
     res.send('Item added')
 })
+
+
 
 app.post('/api/gindrinks', (req, res) => {
     console.log("Drinks Received!");
