@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drinks } from './drinks';
+import { GinDrinks } from './ginDrinks';
 import axios from 'axios';
 
 export class ReadGin extends React.Component {
@@ -44,13 +44,7 @@ ReloadData() {
         return (
         <div>
            
-    
-            
-                
-                <button type="button">Add amazing recipes</button>
-                <br></br>
-                <br></br>
-                <Drinks drinks={this.state.drinks} ReloadData={this.ReloadData}></Drinks>
+                <GinDrinks drinks={this.state.drinks} ReloadData={this.ReloadData}></GinDrinks>
             </div>
         );
     }

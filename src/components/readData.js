@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drinks } from './drinks';
+import { VodkaDrinks } from './vodkaDrinks';
 import axios from 'axios';
 
 export class ReadData extends React.Component {
@@ -44,7 +44,7 @@ ReloadData() {
         return (
             <div>
                 <h1>Vodka Drinks</h1>
-                <Drinks drinks={this.state.drinks} ReloadData={this.ReloadData}></Drinks>
+                <VodkaDrinks drinks={this.state.drinks} ReloadData={this.ReloadData}></VodkaDrinks>
             </div>
         );
     }

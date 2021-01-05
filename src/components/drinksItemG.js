@@ -9,30 +9,38 @@ import axios from 'axios';
 import "./drinks.css";
 
 
-export class DrinksItem extends React.Component {
+export class DrinksItemG extends React.Component {
 
   constructor() {
     super();
     // binds method to on click event 
-    this.DeleteDrink = this.DeleteDrink.bind(this);
     
+    this.DeleteGinDrink = this.DeleteGinDrink.bind(this);
+
 }
 
   
-DeleteDrink(e) {
-  // stops multiple deletes from happening
-  e.preventDefault();
- console.log("Delete: " + this.props.item._id);
- 
 
-  // calls the delete and url and passes up the id
-  axios.delete("http://localhost:4000/api/drinks/" + this.props.item._id)
-      // arrow function invokes method
-      .then(() => {
-          this.props.ReloadData(); // calls reload data on movies.js
-      })
-      .catch();
-}
+
+
+
+  DeleteGinDrink(e) {
+    // stops multiple deletes from happening
+    e.preventDefault();
+    console.log("Delete: " + this.props.item._id);
+  
+    // calls the delete and url and passes up the id
+    axios.delete("http://localhost:4000/api/gindrinks/" + this.props.item._id)
+        // arrow function invokes method
+        .then(() => {
+            this.props.ReloadData(); // calls reload data on movies.js
+        })
+        .catch();
+  }
+
+  
+
+  
 
     render() {
         return (
@@ -57,7 +65,7 @@ DeleteDrink(e) {
   <Card.Link href="#">Another Link</Card.Link>
 </Card.Body>
 <Link to={"/update/" + this.props.item._id} className="btn btn-primary">Update</Link>
-<Button variant="danger" onClick={this.DeleteDrink} >Delete</Button>
+<Button variant="danger" onClick={this.DeleteGinDrink} >Delete</Button>
 
 </Card>
          </div>
@@ -66,6 +74,3 @@ DeleteDrink(e) {
         );
     }
 }
-
-
-

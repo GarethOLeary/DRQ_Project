@@ -57,6 +57,18 @@ export class Update extends React.Component {
                 .catch((error) => {
                     console.log(error);
                 });
+
+                axios.get('http://localhost:4000/api/bestdrinks/' + this.props.match.params.id)
+                .then(response => {
+                    this.setState({
+                        _id: response.data._id,
+                        Name: response.data.name,
+                        Picture: response.data.picture
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             
         }
 
@@ -110,6 +122,14 @@ export class Update extends React.Component {
             });
 
             axios.put('http://localhost:4000/api/gindrinks/' + this.state._id, newDrink)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+            axios.put('http://localhost:4000/api/bestdrinks/' + this.state._id, newDrink)
             .then(res => {
                 console.log(res.data)
             })

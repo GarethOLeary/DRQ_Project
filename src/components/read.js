@@ -44,9 +44,7 @@ ReloadData() {
     render() {
         return (
             <div>
-                 <button type="button">Add amazing recipes</button>
-                <br></br>
-                <br></br>
+                
                 <Drinks drinks={this.state.drinks} ReloadData={this.ReloadData}></Drinks>
             </div>
         );

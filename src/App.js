@@ -13,8 +13,6 @@ import { CreateData } from './components/createData';
 import { ReadGin } from './components/readGin';
 import { CreateGin } from './components/createGin';
 import {Footer} from './components/footer'
-import {HomePractice} from './components/homePractice'
-import { Dashboard } from './components/dashboard';
 import { ReadModal } from './components/readModal';
 
 
@@ -30,7 +28,7 @@ class App extends Component {
         <div className="App">
 
           <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="/homePractice">Cocktail Central</Navbar.Brand>
+            <Navbar.Brand href="/">Cocktail Central</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
@@ -49,7 +47,7 @@ class App extends Component {
         <NavDropdown.Item href="/create">Add a Rum Recipe</NavDropdown.Item>
         <NavDropdown.Item href="/createData">Add a Vodka Recipe</NavDropdown.Item>
         <NavDropdown.Item href="/createGin">Add a Gin Recipe</NavDropdown.Item>
-        <NavDropdown.Item href="/dashboard">Add a  Recipe</NavDropdown.Item>
+        <NavDropdown.Item href="/readModal">Add a  Recipe</NavDropdown.Item>
        
         
       </NavDropdown>
@@ -80,8 +78,6 @@ class App extends Component {
             <Route path='/createData' component={CreateData} exact />
             <Route path='/createGin' component={CreateGin} exact />
             <Route path='/update/:id' component={Update} exact></Route>
-            <Route path='/homePractice' component={HomePractice} exact></Route>
-            <Route path='/dashboard' component={Dashboard} exact></Route>
             <Route path='/readModal' component={ReadModal} exact></Route>
             
           

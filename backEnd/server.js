@@ -36,6 +36,8 @@ var drinksSchema = new Schema({
 var DrinksModel = mongoose.model("drinks", drinksSchema);
 var DrinkModel = mongoose.model("vodkaDrinks", drinksSchema);
 var GinModel = mongoose.model("ginDrinks", drinksSchema);
+var BestModel = mongoose.model("bestDrinks", drinksSchema);
+
 
 
 // Get request 
@@ -56,6 +58,21 @@ DrinksModel.find((err, data) => {
 })
 
     
+})
+
+app.get('/api/bestdrinks', (req, res) => {
+
+    const bestdrinks = [
+         
+
+    ];
+
+    // find records of database and send them back
+BestModel.find((err, data) => {
+    res.json(data);
+})
+
+   
 })
 
 // Get request 
@@ -132,6 +149,16 @@ app.get('/api/gindrinks/:id', (req, res) => {
     })
 })
 
+app.get('/api/bestdrinks/:id', (req, res) => {
+    console.log(req.params.id);
+
+    // call back function
+    //sends back data
+    BestModel.findById(req.params.id, (err, data) => {
+        res.json(data);
+    })
+})
+
 // listens for put request that passes in id
 app.put('/api/drinks/:id', (req, res) => {
     console.log("Update drinks: " + req.params.id);
@@ -168,6 +195,17 @@ app.put('/api/gindrinks/:id', (req, res) => {
         })
 })
 
+app.put('/api/bestdrinks/:id', (req, res) => {
+    console.log("Update drinks: " + req.params.id);
+    console.log(req.body);
+    // method that makes an asynchronous call to database
+    // when request is finished it sends back some data
+    BestModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+        (err, data) => {
+            res.send(data);
+        })
+})
+
 app.post('/api/vodkadrinks', (req, res) => {
     console.log("Drinks Received!");
     console.log(req.body.name);
@@ -178,6 +216,20 @@ app.post('/api/vodkadrinks', (req, res) => {
         picture: req.body.picture
     })
     res.send('Item added')
+})
+
+
+app.post('/api/bestdrinks', (req, res) => {
+    console.log("Drinks Received!");
+    console.log(req.body.name);
+    console.log(req.body.picture);
+
+    BestModel.create({
+        name: req.body.name,
+        picture: req.body.picture
+    })
+    res.send('Item added')
+    
 })
 
 
@@ -213,7 +265,7 @@ app.post('/api/drinks', (req, res) => {
     // listens for http delete method
 app.delete('/api/drinks/:id', (req, res) => {
     // logs to console and pulls out id from url
-    console.log("Delete Drink: " + req.params.id);
+    console.log("Delete Rum Drink: " + req.params.id);
 
     //deletes record and sends back data
     DrinksModel.findByIdAndDelete(req.params.id, (err, data) => {
@@ -221,9 +273,20 @@ app.delete('/api/drinks/:id', (req, res) => {
     })
 })
 
-app.delete('/api/vodkadrinks/:id', (req, res) => {
+app.delete('/api/bestdrinks/:id', (req, res) => {
     // logs to console and pulls out id from url
     console.log("Delete Drink: " + req.params.id);
+    //console.log(req);
+
+    //deletes record and sends back data
+    BestModel.findByIdAndDelete(req.params.id, (err, data) => {
+        res.send(data);
+    })
+})
+
+app.delete('/api/vodkadrinks/:id', (req, res) => {
+    // logs to console and pulls out id from url
+    console.log("Delete Vodka Drink: " + req.params.id);
 
     //deletes record and sends back data
     DrinkModel.findByIdAndDelete(req.params.id, (err, data) => {
@@ -233,11 +296,12 @@ app.delete('/api/vodkadrinks/:id', (req, res) => {
 
 app.delete('/api/gindrinks/:id', (req, res) => {
     // logs to console and pulls out id from url
-    console.log("Delete Drink: " + req.params.id);
-
+    console.log("Delete Gin Drink: " + req.params.id);
+    console.log(res);
     //deletes record and sends back data
     GinModel.findByIdAndDelete(req.params.id, (err, data) => {
         res.send(data);
+       console.log(err);
     })
 })
 
