@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
 const port = 4000
-const cors = require('cors')
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 
+// using cors package
 app.use(cors());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -21,291 +22,112 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // string to connect you to database 
-const myConnectionString = 'mongodb+srv://admin:drq12349@cluster0.hd8xq.mongodb.net/drinks?retryWrites=true&w=majority';
+const myConnectionString = 'mongodb+srv://admin:drq12349@cluster0.hd8xq.mongodb.net/cocktails?retryWrites=true&w=majority';
 mongoose.connect(myConnectionString, { useNewUrlParser: true });
 
 const Schema = mongoose.Schema;
 // schema made for database
 // telling database what type of data is being stored
-var drinksSchema = new Schema({
+var cocktailsSchema = new Schema({
     name: String,
+    base: String,
+    ingredients: String,
     picture: String
 });
-
 // allows me to write data to database
-var DrinksModel = mongoose.model("drinks", drinksSchema);
-var DrinkModel = mongoose.model("vodkaDrinks", drinksSchema);
-var GinModel = mongoose.model("ginDrinks", drinksSchema);
-var BestModel = mongoose.model("bestDrinks", drinksSchema);
-
-
+var CocktailsModel = mongoose.model("cocktail", cocktailsSchema);
 
 // Get request 
-app.get('/api/drinks', (req, res) => {
+app.get('/api/cocktails', (req, res) => {
 
      const mydrinks = [
-        {
-          
-        }
-           
+    //      {
+    //          "Name": "Bloody Mary",
+    //           "Base": "Vodka",
+    //           "Ingredients":  "1 1/2 oz Vodka , 1/2 oz Lemon Juice, 3 oz Tomato Juice, Pepper, Salt",
+    //           "Picture": "https://www.thecocktaildb.com/images/media/drink/t6caa21582485702.jpg"
+    //      },
+    //      {
+    //           "Name": "3-Mile Long Island Iced Tea",
+    //            "Base": "Gin",
+    //           "Ingredients":  "1/2 oz Gin , 1/2 oz Light Rum, 1/2 oz Tequila, 1/2 oz Triple Sec, 1/2 oz Vodka, Coca-Cola, Lemon",
+    //           "Picture": "https://www.thecocktaildb.com/images/media/drink/rrtssw1472668972.jpg"
+    //       },
+
+    //  {
+    //               "Name": "Zombie",
+    //              "Base": "Rum",
+    //              "Ingredients":  "25ml Dark Rum , 25ml White Rum, 50 ml of Lime juice, 150ml lime juice, 1 tsp Grenadine",
+    //             "Picture": "https://www.thecocktaildb.com/images/media/drink/2en3jk1509557725.jpg"
+    //        }
 
      ];
-
-   
-// find records of database and send them back
-DrinksModel.find((err, data) => {
-    res.json(data);
-})
-
     
-})
-
-app.get('/api/bestdrinks', (req, res) => {
-
-    const bestdrinks = [
-         
-
-    ];
-
     // find records of database and send them back
-BestModel.find((err, data) => {
-    res.json(data);
-})
-
-   
-})
-
-// Get request 
-app.get('/api/gindrinks', (req, res) => {
-
-    const gindrinks = [
-       {
-         
-       }
-          
-
-    ];
-    GinModel.find((err, data) => {
+   CocktailsModel.find((err, data) => {
         res.json(data);
-     })
+    })
 
-})
-
-
-
-
-// Get request 
-app.get('/api/vodkadrinks', (req, res) => {
-
-    const drinks = [
-       {
-         
-       }
-          
-
-    ];
-//res.status(200).json({
-    //message: "all ok",
-    //vodkadrinks:drinks
-//})
-// find records of database and send them back
-DrinkModel.find((err, data) => {
-   res.json(data);
-})
-
-
-   
+    // object and message being passed down
+    // res.status(200).json({
+      
+    //  drinks: mydrinks
+    // });
 })
 
 // listens to a get request at local host...
-app.get('/api/drinks/:id', (req, res) => {
+app.get('/api/cocktails/:id', (req, res) => {
     console.log(req.params.id);
 
     // call back function
     //sends back data
-    DrinksModel.findById(req.params.id, (err, data) => {
+   CocktailsModel.findById(req.params.id, (err, data) => {
         res.json(data);
     })
 })
 
-// listens to a get request at local host...
-app.get('/api/vodkadrinks/:id', (req, res) => {
-    console.log(req.params.id);
-
-    // call back function
-    //sends back data
-    DrinkModel.findById(req.params.id, (err, data) => {
-        res.json(data);
-    })
-})
-
-app.get('/api/gindrinks/:id', (req, res) => {
-    console.log(req.params.id);
-
-    // call back function
-    //sends back data
-    GinModel.findById(req.params.id, (err, data) => {
-        res.json(data);
-    })
-})
-
-app.get('/api/bestdrinks/:id', (req, res) => {
-    console.log(req.params.id);
-
-    // call back function
-    //sends back data
-    BestModel.findById(req.params.id, (err, data) => {
-        res.json(data);
-    })
-})
-
-// listens for put request that passes in id
-app.put('/api/drinks/:id', (req, res) => {
+app.put('/api/cocktails/:id', (req, res) => {
     console.log("Update drinks: " + req.params.id);
     console.log(req.body);
     // method that makes an asynchronous call to database
     // when request is finished it sends back some data
-    DrinksModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+    CocktailsModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
         (err, data) => {
             res.send(data);
-        })
+           })
 })
 
-// listens for put request that passes in id
-app.put('/api/vodkadrinks/:id', (req, res) => {
-    console.log("Update drinks: " + req.params.id);
-    console.log(req.body);
-    // method that makes an asynchronous call to database
-    // when request is finished it sends back some data
-    DrinkModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
-        (err, data) => {
-            res.send(data);
-        })
-})
-
-// listens for put request that passes in id
-app.put('/api/gindrinks/:id', (req, res) => {
-    console.log("Update drinks: " + req.params.id);
-    console.log(req.body);
-    // method that makes an asynchronous call to database
-    // when request is finished it sends back some data
-    GinModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
-        (err, data) => {
-            res.send(data);
-        })
-})
-
-app.put('/api/bestdrinks/:id', (req, res) => {
-    console.log("Update drinks: " + req.params.id);
-    console.log(req.body);
-    // method that makes an asynchronous call to database
-    // when request is finished it sends back some data
-    BestModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
-        (err, data) => {
-            res.send(data);
-        })
-})
-
-app.post('/api/vodkadrinks', (req, res) => {
+// listens to post request at url
+// Pulls title,year and poster out of body
+app.post('/api/cocktails', (req, res) => {
     console.log("Drinks Received!");
     console.log(req.body.name);
+    console.log(req.body.base);
+    console.log(req.body.ingredients);
     console.log(req.body.picture);
-
-    DrinkModel.create({
-        name: req.body.name,
-        picture: req.body.picture
-    })
-    res.send('Item added')
-})
-
-
-app.post('/api/bestdrinks', (req, res) => {
-    console.log("Drinks Received!");
-    console.log(req.body.name);
-    console.log(req.body.picture);
-
-    BestModel.create({
-        name: req.body.name,
-        picture: req.body.picture
-    })
-    res.send('Item added')
-    
-})
-
-
-
-app.post('/api/gindrinks', (req, res) => {
-    console.log("Drinks Received!");
-    console.log(req.body.name);
-    console.log(req.body.picture);
-
-    GinModel.create({
-        name: req.body.name,
-        picture: req.body.picture
-    })
-    res.send('Item added')
-})
-
-app.post('/api/drinks', (req, res) => {
-    console.log("Drinks Received!");
-    console.log(req.body.name);
-    console.log(req.body.picture);
-
 
     // create method - write data to database
-    DrinksModel.create({
-        name: req.body.name,
-        picture: req.body.picture
+   CocktailsModel.create({
+       name: req.body.name,
+        base: req.body.base,
+        ingredients: req.body.ingredients,
+        picture: req.body.picture,
     })
 
-    
-   res.send('Item added')
-    })
-
-    // listens for http delete method
-app.delete('/api/drinks/:id', (req, res) => {
-    // logs to console and pulls out id from url
-    console.log("Delete Rum Drink: " + req.params.id);
-
-    //deletes record and sends back data
-    DrinksModel.findByIdAndDelete(req.params.id, (err, data) => {
-        res.send(data);
-    })
+    // send a response down to client
+    res.send('Item Added');
 })
 
-app.delete('/api/bestdrinks/:id', (req, res) => {
+app.delete('/api/cocktails/:id', (req, res) => {
     // logs to console and pulls out id from url
     console.log("Delete Drink: " + req.params.id);
     //console.log(req);
-
     //deletes record and sends back data
-    BestModel.findByIdAndDelete(req.params.id, (err, data) => {
+    CocktailsModel.findByIdAndDelete(req.params.id, (err, data) => {
         res.send(data);
     })
 })
-
-app.delete('/api/vodkadrinks/:id', (req, res) => {
-    // logs to console and pulls out id from url
-    console.log("Delete Vodka Drink: " + req.params.id);
-
-    //deletes record and sends back data
-    DrinkModel.findByIdAndDelete(req.params.id, (err, data) => {
-        res.send(data);
-    })
-})
-
-app.delete('/api/gindrinks/:id', (req, res) => {
-    // logs to console and pulls out id from url
-    console.log("Delete Gin Drink: " + req.params.id);
-    console.log(res);
-    //deletes record and sends back data
-    GinModel.findByIdAndDelete(req.params.id, (err, data) => {
-        res.send(data);
-       console.log(err);
-    })
-})
-
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+
 export class Update extends React.Component {
 
     constructor() {
@@ -10,10 +11,14 @@ export class Update extends React.Component {
         // binds the events to this instance of the class
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeBase = this.onChangeBase.bind(this);
+        this.onChangeIngredients = this.onChangeIngredients.bind(this);
         this.onChangePicture = this.onChangePicture.bind(this);
 
         this.state = {
             Name: '',
+            Base: '',
+            Ingredients: '',
             Picture: ''
         }
     }
@@ -23,57 +28,22 @@ export class Update extends React.Component {
         // pulled out id of document and put it as part of url
         // called get request 
         // updates the state
-        axios.get('http://localhost:4000/api/drinks/' + this.props.match.params.id)
+        axios.get('http://localhost:4000/api/cocktails/' + this.props.match.params.id)
             .then(response => {
                 this.setState({
                     _id: response.data._id,
                     Name: response.data.name,
+                    Base: response.data.base,
+                    Ingredients: response.data.ingredients,
                     Picture: response.data.picture
                 })
             })
             .catch((error) => {
                 console.log(error);
             });
-            axios.get('http://localhost:4000/api/vodkadrinks/' + this.props.match.params.id)
-                .then(response => {
-                    this.setState({
-                        _id: response.data._id,
-                        Name: response.data.name,
-                        Picture: response.data.picture
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
 
-                axios.get('http://localhost:4000/api/gindrinks/' + this.props.match.params.id)
-                .then(response => {
-                    this.setState({
-                        _id: response.data._id,
-                        Name: response.data.name,
-                        Picture: response.data.picture
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
 
-                axios.get('http://localhost:4000/api/bestdrinks/' + this.props.match.params.id)
-                .then(response => {
-                    this.setState({
-                        _id: response.data._id,
-                        Name: response.data.name,
-                        Picture: response.data.picture
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            
-        }
-
-        
-        
+    }
     // methods that takes argument and updates the state when the value changes
     onChangeName(e) {
         this.setState({
@@ -88,6 +58,19 @@ export class Update extends React.Component {
         });
     }
 
+    onChangeBase(e) {
+        this.setState({
+            Base: e.target.value
+        });
+    }
+
+
+    onChangeIngredients(e) {
+        this.setState({
+            Ingredients: e.target.value
+        });
+    }
+
 
 
     onSubmit(e) {
@@ -95,59 +78,29 @@ export class Update extends React.Component {
         e.preventDefault();
         // displays to the screen
         alert("Drink: " + this.state.Name + " "
-            
+
             + this.state.Picture);
 
         const newDrink = {
             name: this.state.Name,
+            base: this.state.Base,
+            ingredients: this.state.Ingredients,
             picture: this.state.Picture
         }
 
+
         // calling put request on the server 
         // passes up newMovie object
-        axios.put('http://localhost:4000/api/drinks/' + this.state._id, newDrink)
+        axios.put('http://localhost:4000/api/cocktails/' + this.state._id, newDrink)
             .then(res => {
+
                 console.log(res.data)
             })
             .catch((err) => {
                 console.log(err);
             });
 
-            axios.put('http://localhost:4000/api/vodkadrinks/' + this.state._id, newDrink)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
 
-            axios.put('http://localhost:4000/api/gindrinks/' + this.state._id, newDrink)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-            axios.put('http://localhost:4000/api/bestdrinks/' + this.state._id, newDrink)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-           
-
-        // Post request made to the url and passing object up
-     /*   axios.post('http://localhost:4000/api/drinks', newDrink)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-       */
     }
 
     render() {
@@ -166,7 +119,23 @@ export class Update extends React.Component {
                             value={this.state.Name}
                             onChange={this.onChangeName}></input>
                     </div>
-                    
+
+                    <div className="form-group">
+                        <lable>Name of Drink: </lable>
+                        <input type='text'
+                            className='form-control'
+                            value={this.state.Base}
+                            onChange={this.onChangeBase}></input>
+                    </div>
+
+                    <div className="form-group">
+                        <lable>Name of Drink: </lable>
+                        <input type='text'
+                            className='form-control'
+                            value={this.state.Ingredients}
+                            onChange={this.onChangeIngredients}></input>
+                    </div>
+
                     <div className='form-group'>
                         <label>Add picture for drink: </label>
                         <textarea type='text'
@@ -182,9 +151,6 @@ export class Update extends React.Component {
                             className='btn btn-primary'></input>
                     </div>
                 </form>
-
-
-
             </div>
         );
     }
